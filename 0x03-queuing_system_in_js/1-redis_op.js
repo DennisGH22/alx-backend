@@ -13,9 +13,9 @@ client.on('error', (err) => {
 function setNewSchool (schoolName, value) {
   client.set(schoolName, value, (err, reply) => {
     if (err) {
-      console.error('Error setting value:', err);
+      console.error(err);
     } else {
-      console.log('Value set successfully:', reply);
+      console.log(reply);
     }
   });
 }
@@ -23,9 +23,9 @@ function setNewSchool (schoolName, value) {
 function displaySchoolValue (schoolName) {
   client.get(schoolName, (err, reply) => {
     if (err) {
-      console.error('Error getting value:', err);
+      console.error(err);
     } else {
-      console.log(`Value for ${schoolName}:`, reply);
+      console.log(reply);
     }
   });
 }
