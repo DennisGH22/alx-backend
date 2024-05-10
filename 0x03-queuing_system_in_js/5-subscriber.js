@@ -12,7 +12,7 @@ subscriber.on('error', (err) => {
 
 subscriber.subscribe('holberton school channel');
 
-subscriber.on('message', (message) => {
+subscriber.on('message', (channel, message) => {
   console.log(message);
   if (message === 'KILL_SERVER') {
     subscriber.unsubscribe();
