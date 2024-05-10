@@ -12,8 +12,8 @@ subscriber.on('error', (err) => {
 
 subscriber.subscribe('holberton school channel');
 
-subscriber.on('message', (channel, message) => {
-  console.log(`Message received on channel ${channel}: ${message}`);
+subscriber.on('message', (message) => {
+  console.log(message);
   if (message === 'KILL_SERVER') {
     subscriber.unsubscribe();
     subscriber.quit();
