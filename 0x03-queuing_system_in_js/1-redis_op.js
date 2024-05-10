@@ -15,7 +15,7 @@ function setNewSchool (schoolName, value) {
     if (err) {
       console.error(err);
     } else {
-      console.log('Reply: ', reply);
+      console.log('Reply:', reply);
     }
   });
 }
