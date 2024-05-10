@@ -34,7 +34,7 @@ describe('createPushNotificationsJobs', function () {
   });
 
   it('logs job creation', function () {
-    const jobs = [{ phoneNumber: '1234567890', message: 'Test message 1' }];
+    const jobs = [{ phoneNumber: '0123456789', message: 'Test message 1' }];
     createPushNotificationsJobs(jobs, queue);
     assert(queue.testMode.jobs[0].log[0].includes('Notification job created:'));
   });
