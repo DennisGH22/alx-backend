@@ -16,8 +16,7 @@ client.on('error', (err) => {
 
 async function setNewSchool (schoolName, value) {
   try {
-    await setAsync(schoolName, value, (reply));
-    console.log('Reply:', reply);
+    await setAsync(schoolName, value, (err, reply) => console.log('Reply:', reply));
   } catch (err) {
     console.error(err);
   }
