@@ -1,44 +1,41 @@
-const createPushNotificationsJobs = require('./8-job');
 import kue from 'kue';
+import assert from 'assert';
+const createPushNotificationsJobs = require('./8-job');
 
-console.log = jest.fn();
-console.error = jest.fn();
+console.log = () => {};
+console.error = () => {};
 
-describe('createPushNotificationsJobs', () => {
+describe('createPushNotificationsJobs', function () {
   let queue;
 
-  beforeEach(() => {
+  beforeEach(function () {
     queue = kue.createQueue({ redis: { createClientFactory: () => kue.redis.createClient() }, testMode: true });
   });
 
-  afterEach(() => {
-    queue.testMode.clear();
-    queue.shutdown(1000, (err) => {
-      if (err) console.error('Error shutting down queue:', err);
-    });
+  afterEach(function (done) {
+    queue.testMode.clear(done);
   });
 
-  test('display a error message if jobs is not an array', () => {
-    expect(() => {
+  it('display a error message if jobs is not an array', function () {
+    assert.throws(() => {
       createPushNotificationsJobs('not an array', queue);
-    }).toThrow('Jobs is not an array');
+    }, { message: 'Jobs is not an array' });
   });
 
-  test('create two new jobs to the queue', () => {
+  it('create two new jobs to the queue', function () {
     const jobs = [
-      { phoneNumber: '1234567890', message: 'Test message 1' },
-      { phoneNumber: '9876543210', message: 'Test message 2' },
+      { phoneNumber: '0123456789', message: 'Test message 1' },
+      { phoneNumber: '9876543210', message: 'Test message 2' }
     ];
 
     createPushNotificationsJobs(jobs, queue);
 
-    expect(queue.testMode.jobs.length).toBe(jobs.length);
+    assert.strictEqual(queue.testMode.jobs.length, jobs.length);
   });
 
-  test('logs job creation', () => {
+  it('logs job creation', function () {
     const jobs = [{ phoneNumber: '1234567890', message: 'Test message 1' }];
     createPushNotificationsJobs(jobs, queue);
-    expect(console.log).toHaveBeenCalledWith(expect.stringMatching(/^Notification job created:/));
+    assert(queue.testMode.jobs[0].log[0].includes('Notification job created:'));
   });
-
 });
