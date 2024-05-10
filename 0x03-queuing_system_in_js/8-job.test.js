@@ -1,5 +1,5 @@
 import kue from 'kue';
-import assert from 'assert';
+const assert = require('assert');
 const createPushNotificationsJobs = require('./8-job');
 
 console.log = () => {};
